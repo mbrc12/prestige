@@ -7,8 +7,8 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-// Your should implement this on *YourScene, and T should be your global state across scenes
-// Your scene may have scene-local state as well.
+// Your should implement this on *YourScene, and T should be your global state across scenes.
+// Your scene may have scene-local state as well. 
 type Scene[T any] interface {
 	// Transition has started to enter your scene, load your stuff now
 	EnterStart(state *T)
@@ -36,6 +36,9 @@ type Transition interface {
 	Update() bool
 }
 
+// The only field accessible here is State. The only use for this should be to implement
+// custom transitions that also depend on the current state (for instance if you wish to show
+// scores on the transition screen).
 type SceneManager[T any] struct {
 	State      *T
 	current    Scene[T]
@@ -46,6 +49,8 @@ type SceneManager[T any] struct {
 	nextImage    *ebiten.Image
 }
 
+
+// Construct a new scene manager, given the initial scene and initial state.
 func NewSceneManager[T any](firstScene Scene[T], state *T) (manager *SceneManager[T]) {
 	manager = &SceneManager[T]{}
 	manager.State = state
@@ -56,6 +61,7 @@ func NewSceneManager[T any](firstScene Scene[T], state *T) (manager *SceneManage
 	return
 }
 
+// Call this to transition to a new scene. 
 func (self *SceneManager[T]) Transition(dest Scene[T], transition Transition) error {
 	if self.transition != nil {
 		return errors.New("New transition cannot start during another transition")

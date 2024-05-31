@@ -6,11 +6,16 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
+// A simple fade transition, that uses half the time to fade out of the current scene
+// and half the time to fade into the new scene. You may wish to freeze inputs during the fade,
+// which you can accomplish in the `ExitStart` and `EnterStart` phase of your scenes,
+// and unfreeze during `EnterEnd` for the new scene.
 type FadeTransition struct {
 	startTime time.Time
 	duration  float64
 }
 
+// Pass in the total duration to construct a new fade transition.
 func NewFadeTransition(duration float64) *FadeTransition {
 	return &FadeTransition{duration: duration}
 }

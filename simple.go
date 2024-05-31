@@ -2,6 +2,7 @@ package prestige
 
 import "github.com/hajimehoshi/ebiten/v2"
 
+// A simple transition that immediately transfers from the current state to the next
 type SimpleTransition struct {
 }
 
