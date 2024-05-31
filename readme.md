@@ -73,4 +73,7 @@ Update() bool
 The functionality is clear, but I will elaborate a bit on `Interpolate`. Essentially, interpolate is given the
 images output by the current scene and the next scene (loading and initializing them are taken care of by the scene
 manager). The job of this function is to just interpolate the two images anyway you see fit. For instance, 
-see the implementation in `fade.go`.
+see the implementation in `fade.go`. 
+
+_If you really need the current state in the transition, you may query that from `SceneManager.State` and insert it into
+the state for your Transition during construction_.

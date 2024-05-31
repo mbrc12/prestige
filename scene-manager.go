@@ -37,7 +37,7 @@ type Transition interface {
 }
 
 type SceneManager[T any] struct {
-	state      *T
+	State      *T
 	current    Scene[T]
 	next       Scene[T]
 	transition Transition
@@ -48,7 +48,7 @@ type SceneManager[T any] struct {
 
 func NewSceneManager[T any](firstScene Scene[T], state *T) (manager *SceneManager[T]) {
 	manager = &SceneManager[T]{}
-	manager.state = state
+	manager.State = state
 	manager.current = firstScene
 	firstScene.EnterStart(state)
 	firstScene.EnterEnd(state)
@@ -67,10 +67,10 @@ func (self *SceneManager[T]) Transition(dest Scene[T], transition Transition) er
 	self.currentImage = nil
 	self.nextImage = nil
 
-	self.current.ExitStart(self.state)
+	self.current.ExitStart(self.State)
 
 	self.next = dest
-	self.next.EnterStart(self.state)
+	self.next.EnterStart(self.State)
 
 	return nil
 }
@@ -83,7 +83,7 @@ func correctImageSizes(image **ebiten.Image, bounds image.Rectangle) {
 
 func (self *SceneManager[T]) Draw(screen *ebiten.Image) {
 	if self.transition == nil {
-		self.current.Draw(self.state, screen)
+		self.current.Draw(self.State, screen)
 		return
 	}
 
@@ -94,8 +94,8 @@ func (self *SceneManager[T]) Draw(screen *ebiten.Image) {
 	correctImageSizes(&self.nextImage, bounds)
 
 	// Draw the images from the source and destination to their respective image targets
-	self.current.Draw(self.state, self.currentImage)
-	self.next.Draw(self.state, self.nextImage)
+	self.current.Draw(self.State, self.currentImage)
+	self.next.Draw(self.State, self.nextImage)
 
 	// Ask the transition to interpolate the images and produce a new image
 	self.transition.Interpolate(screen, self.currentImage, self.nextImage)
@@ -103,14 +103,14 @@ func (self *SceneManager[T]) Draw(screen *ebiten.Image) {
 
 func (self *SceneManager[T]) Update() error {
 	if self.transition == nil {
-		return self.current.Update(self.state)
+		return self.current.Update(self.State)
 	}
 
-	if err := self.current.Update(self.state); err != nil {
+	if err := self.current.Update(self.State); err != nil {
 		return err
 	}
 
-	if err := self.next.Update(self.state); err != nil {
+	if err := self.next.Update(self.State); err != nil {
 		return err
 	}
 
@@ -119,8 +119,8 @@ func (self *SceneManager[T]) Update() error {
 	// Transition has finished
 	if finished {
 		// call the necessary functions to inform the scenes that the transition has ended
-		self.current.ExitEnd(self.state)
-		self.next.EnterEnd(self.state)
+		self.current.ExitEnd(self.State)
+		self.next.EnterEnd(self.State)
 
 		// deallocate images and reset the transition
 		self.transition = nil
@@ -136,5 +136,5 @@ func (self *SceneManager[T]) Update() error {
 }
 
 func (self *SceneManager[T]) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
-	return self.current.Layout(self.state, outsideWidth, outsideHeight)
+	return self.current.Layout(self.State, outsideWidth, outsideHeight)
 }
