@@ -6,7 +6,8 @@ A simple scene manager for [ebiten](https://ebitengine.org/)
 
 `prestige` is heavily inspired by [stagehand](https://github.com/joelschutz/stagehand), but aims to simplify and clarify
 some parts. It also comes with (way) fewer features, but should suffice, or be easily extendable, to accommodate other
-use cases. This document contains some details about the structure of this package.
+use cases. This document contains some details about the structure of this package. Please read it for a better
+understanding of how this package works; if anything here is unclear, it is considered a bug.
 
 The main file is `scene-manager.go` which defines two crucial interfaces, `Scene[T]` and `Transition`. `fade.go` and
 `simple.go` contain two simple implementations of `Transition`. `examples/basic` contains a simple example showing how
@@ -40,17 +41,20 @@ Draw(state *T, screen *ebiten.Image)
 Update(state *T) error
 Layout(state *T, outsideWidth, outsideHeight int) (screenWidth, screenHeight int)
 ```
+Take a look at `examples/basic/main.go` for an example implementation of these methods. These implementations should
+look very similar to analogous implementations of `*Game`, but now you have two sources of state: the first is the method
+received `*BasicState`, and the second is the overall state passed to the method `*T`.
 
 * But there are also four lifecycle methods 
 ```go
 // Transition has started to enter your scene, load your stuff now
 EnterStart(state *T)
-    // Transition has finished entering your scene, enable scene mechanics if they were disabled
+// Transition has finished entering your scene, enable scene mechanics if they were disabled
 EnterEnd(state *T)
 
-    // Transition has started to exit your scene, disable scene mechanics if you like
+// Transition has started to exit your scene, disable scene mechanics if you like
 ExitStart(state *T)
-    // Transition has finished exiting your scene, wrap up now
+// Transition has finished exiting your scene, wrap up now
 ExitEnd(state *T)
 ```
 The functionality here is clear.
@@ -60,7 +64,7 @@ The functionality here is clear.
 // Called before the transition begins. Initialize the state
 Start()
 
-    // Interpolate between two images produced by the two scenes between whom this transition exists
+// Interpolate between two images produced by the two scenes between whom this transition exists
 Interpolate(screen *ebiten.Image, src *ebiten.Image, dest *ebiten.Image)
 
 // Update the state of the transition and return whether the transition has finished
