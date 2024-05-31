@@ -13,6 +13,7 @@ The main file is `scene-manager.go` which defines two crucial interfaces, `Scene
 to use this package. You can run it using `go run .`.
 
 The idea is as follows:
+
     * You have a state struct, which has the same purpose as the usual `Game` struct in ebitengine. It should contain
         state used across all scenes. It is also recommended to add a `SceneManager` field in your state. For example,
         the state in `examples/basic` is just
