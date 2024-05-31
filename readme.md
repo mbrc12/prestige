@@ -63,7 +63,12 @@ ExitStart(state *T)
 // Transition has finished exiting your scene, wrap up now
 ExitEnd(state *T)
 ```
-The functionality here is clear.
+The functionality here is clear. If you do not wish to do anything special to accommodate transitions, all four of these
+would be empty. However, during a transition, you may wish to freeze inputs and such, which may be accomplished by
+implementing these methods.
+
+_When the first scene is loaded, `EnterStart` and `EnterEnd` are called in succession (see the implementation of 
+`NewSceneManager`), so you may use them consistently to load dependencies_.
 
 * Transitions are completely decoupled from the scenes, so they have no type parameter. They implement the interface
 ```go
