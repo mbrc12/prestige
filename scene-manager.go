@@ -1,4 +1,4 @@
-package scenery
+package prestige
 
 import (
 	"errors"

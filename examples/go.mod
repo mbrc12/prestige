@@ -1,4 +1,4 @@
-module github.com/mbrc12/prestige
+module github.com/mbrc12/prestige/examples
 
 go 1.22.3
 
@@ -8,6 +8,7 @@ require (
 	github.com/ebitengine/purego v0.7.0 // indirect
 	github.com/hajimehoshi/ebiten/v2 v2.7.4 // indirect
 	github.com/jezek/xgb v1.1.1 // indirect
+	github.com/mbrc12/prestige v0.0.0-20240531102600-c945e4dc07d5 // indirect
 	golang.org/x/sync v0.7.0 // indirect
 	golang.org/x/sys v0.20.0 // indirect
 )
