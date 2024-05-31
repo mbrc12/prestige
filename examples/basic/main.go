@@ -8,7 +8,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/hajimehoshi/ebiten/v2/vector"
-	scenery "github.com/mbrc12/prestige"
+	prestige "github.com/mbrc12/prestige"
 )
 
 const (
@@ -22,7 +22,7 @@ var (
 )
 
 type State struct {
-	Manager *scenery.SceneManager[State]
+	Manager *prestige.SceneManager[State]
 }
 
 type BasicScene struct {
@@ -41,7 +41,7 @@ func (self *BasicScene) Update(state *State) error {
 	if inpututil.IsKeyJustPressed(ebiten.KeySpace) {
 		log.Println("Transitioning ...")
 
-		if err := state.Manager.Transition(&BasicScene{}, scenery.NewFadeTransition(1)); err != nil {
+		if err := state.Manager.Transition(&BasicScene{}, prestige.NewFadeTransition(1)); err != nil {
             log.Fatal(err)
 		}
 	}
@@ -81,7 +81,7 @@ func (scene *BasicScene) Layout(state *State, w, h int) (int, int) {
 func main() {
 	basicScene := &BasicScene{}
 	state := State{}
-	manager := scenery.NewSceneManager(basicScene, &state)
+	manager := prestige.NewSceneManager(basicScene, &state)
 	state.Manager = manager
 
 	ebiten.SetWindowSize(WIDTH, HEIGHT)
