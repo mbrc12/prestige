@@ -2,7 +2,7 @@
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/mbrc12/prestige.svg)](https://pkg.go.dev/github.com/mbrc12/prestige)
 
-A simple scene manager for [ebiten](https://ebitengine.org/)
+A simple scene manager for [ebitengine](https://ebitengine.org/).
 
 ---- 
 

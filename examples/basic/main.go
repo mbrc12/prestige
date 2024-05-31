@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"image/color"
 	"log"
 	rand "math/rand/v2"
@@ -79,6 +80,8 @@ func (scene *BasicScene) Layout(state *State, w, h int) (int, int) {
 }
 
 func main() {
+    fmt.Println("Press Left/Right to move, and Space to transition.")
+
 	basicScene := &BasicScene{}
 	state := State{}
 	manager := prestige.NewSceneManager(basicScene, &state)
