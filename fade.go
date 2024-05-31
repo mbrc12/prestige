@@ -15,7 +15,7 @@ type FadeTransition struct {
 	duration  float64
 }
 
-// Pass in the total duration to construct a new fade transition.
+// Pass in the total duration (in seconds) to construct a new fade transition.
 func NewFadeTransition(duration float64) *FadeTransition {
 	return &FadeTransition{duration: duration}
 }

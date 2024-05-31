@@ -33,7 +33,11 @@ state := State{}
 manager := prestige.NewSceneManager(basicScene, &state)
 state.Manager = manager
 ```
-Having the manager in your state will allow you to call methods on it, for instance, to do transitions.
+Having the manager in your state will allow you to call methods on it, for instance, to do transitions, like so:
+```go
+// Fade transition for 1s to a new instance of BasicScene
+state.Manager.Transition(&BasicScene{}, prestige.NewFadeTransition(1)) 
+```
 
 * For each scene you have a struct (say `BasicScene`) such that `*BasicScene` implements `Scene[T]` 
 where `T` is the type of your state. The methods needed of `Scene[T]` contain those needed of `*Game` in ebitengine,
